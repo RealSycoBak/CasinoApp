@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 import HomePage from './pages/Home/HomePage';
@@ -25,7 +25,7 @@ export default function App() {
   if (loading) return <p>Loading…</p>;
 
   return (
-    <BrowserRouter>
+    <HashRouter>
     <Routes>
     <Route path="/" element={<HomePage user={user} setUser={setUser} />} />
     <Route
@@ -37,6 +37,6 @@ export default function App() {
       }
     />
   </Routes>
-</BrowserRouter>
+</HashRouter>
   );
 }

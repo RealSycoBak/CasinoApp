@@ -1,9 +1,17 @@
-import { app, BrowserWindow } from 'electron';
+import { fileURLToPath, pathToFileURL } from 'url';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { app, BrowserWindow } from 'electron';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDev = !app.isPackaged;
+
+if (!isDev) {
+  const apiPath = path.join(__dirname, 'dist', 'api', 'index.js');
+  const apiUrl  = pathToFileURL(apiPath).href;
+  import(apiUrl)
+    .then(() => console.log('✅ API loaded'))
+    .catch(err => console.error('API failed to load:', err));
+}
 
 function createWindow() {
   const win = new BrowserWindow({

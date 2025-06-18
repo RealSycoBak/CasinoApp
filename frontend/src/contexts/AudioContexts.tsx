@@ -7,6 +7,7 @@ import  {
 } from 'react';
 
 import type { ReactNode } from 'react';
+import cyberbeat from '../assets/cyberbeat.mp3';
 
 interface AudioContextType {
   isPlaying: boolean;
@@ -45,7 +46,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
   return (
     <AudioContext.Provider value={{ isPlaying, togglePlay }}>
-      <audio ref={audioRef} src="/cyberbeat.mp3" />
+      <audio ref={audioRef} src={cyberbeat} />
       {children}
     </AudioContext.Provider>
   );
