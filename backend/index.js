@@ -31,15 +31,18 @@ app.use(express.json());
 
 app.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    accessType: 'online'
+  })
 );
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/',
-    successRedirect: 'http://localhost:5173/dashboard',
-  })
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (_req, res) => {
+    res.redirect('http://localhost:5173/casino');
+  }
 );
 
 app.post('/auth/logout', (req, res) => {
