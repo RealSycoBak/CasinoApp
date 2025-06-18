@@ -112,3 +112,57 @@
   color: black;
   box-shadow: 0 0 12px #0ff;
 }
+
+/* loading state */
+.loading {
+  color: #fff;
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+/* guest welcome */
+.welcome-guest {
+  color: #0ff;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 8px #0ff;
+}
+
+/* Google login button */
+.google-login {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(66, 133, 244, 0.7);
+  transition: transform 0.2s;
+}
+.google-login:hover {
+  transform: scale(1.05);
+}
+
+/* user info block */
+.user-info {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 5px black;
+}
+
+/* logout button */
+.logout-button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background: #ff0055;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.logout-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff0055;
+}

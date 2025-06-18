@@ -1,22 +1,72 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import dotenv from 'dotenv'
+const express = require('express');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const passport = require('./auth/passport');
+require('dotenv').config();
 
-dotenv.config()
+const app = express();
 
-const app = express()
+const cors = require('cors');
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser:    true,
+  useUnifiedTopology: true,
+});
+
 app.use(cors({
-    origin: process.env.FRONTEND
-  }))
-app.use(bodyParser.json())
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
-const PORT = process.env.PORT || 3000
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { sameSite: 'lax', secure: false }
+}));
 
-app.get('/', (req, res) => {
-    res.send('/')
-})
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.json());
 
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`)
-})
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/',
+    successRedirect: 'http://localhost:5173/dashboard',
+  })
+);
+
+app.post('/auth/logout', (req, res) => {
+  req.logout(() => {
+    req.session.destroy(err => {
+      res.clearCookie('connect.sid');
+      res.sendStatus(err ? 500 : 200);
+    });
+  });
+});
+
+function ensureAuth(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.status(401).json({ error: 'Not authenticated' });
+}
+
+app.get('/api/me', ensureAuth, (req, res) => {
+  const { displayName, email, currency } = req.user;
+  res.json({ displayName, email, currency });
+});
+
+app.post('/api/currency/add', ensureAuth, async (req, res) => {
+  const amount = Number(req.body.amount) || 0;
+  req.user.currency += amount;
+  await req.user.save();
+  res.json({ currency: req.user.currency });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`API running on :${PORT}`));
