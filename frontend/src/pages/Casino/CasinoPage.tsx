@@ -1,10 +1,9 @@
-// src/pages/Casino/CasinoPage.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User } from '../../App';
-import './CasinoPage.css';
-import { useAudio } from '../../contexts/AudioContexts';
 import ParticlesBg from '../../components/ParticlesBg/ParticlesBg';
+import { useAudio } from '../../contexts/AudioContexts';
+import './CasinoPage.css';
 
 interface Props {
   user: User;
@@ -27,44 +26,43 @@ export default function CasinoPage({ user, setUser }: Props) {
   const openSettings  = () => setShowSettings(true);
   const closeSettings = () => setShowSettings(false);
   const handleLogout  = () => {
-    fetch('http://localhost:3000/auth/logout', { method: 'POST', credentials: 'include' })
+    fetch('/auth/logout', { method: 'POST', credentials: 'include' })
       .then(() => setUser(null))
       .then(() => navigate('/'));
   };
 
   return (
     <div className="casino-page">
-       <ParticlesBg />
+      <ParticlesBg />
       <header className="casino-header">
         <button className="back-btn" onClick={goBack}>← Home</button>
         <h1 className="neon-title">Casino Neon Lobby</h1>
         <div className="header-user">
           <span className="neon-text">{user.displayName}</span>
           <span className="neon-text">💰 {user.currency}</span>
+          {/* Only settings icon in header now */}
           <button className="settings-btn" onClick={openSettings}>⚙️</button>
-          <button className="music-btn" onClick={togglePlay}>
-            {isPlaying ? '🔊' : '🔇'}
-          </button>
         </div>
       </header>
 
       <div className="games-container">
-      <div className="games-grid">
-        {GAMES.map(game => (
-          <div key={game.id} className={`game-card ${game.bgClass}`}>
-            <h2 className="game-name neon-text">{game.name}</h2>
-            <button className="play-btn" onClick={() => alert(`Launch ${game.name}`)}>
-              Play
-            </button>
-          </div>
-        ))}
-      </div>
+        <div className="games-grid">
+          {GAMES.map(game => (
+            <div key={game.id} className={`game-card ${game.bgClass}`}>
+              <h2 className="game-name neon-text">{game.name}</h2>
+              <button className="play-btn" onClick={() => alert(`Launch ${game.name}`)}>
+                Play
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {showSettings && (
         <div className="settings-modal-backdrop" onClick={closeSettings}>
           <div className="settings-modal" onClick={e => e.stopPropagation()}>
             <h2 className="neon-text">Settings</h2>
+
             <div className="settings-item">
               <label className="neon-text">Volume:</label>
               <input
@@ -79,6 +77,21 @@ export default function CasinoPage({ user, setUser }: Props) {
                 }}
               />
             </div>
+
+            <div className="settings-item">
+              <label className="neon-text">Music:</label>
+              <button className="toggle-btn" onClick={togglePlay}>
+                {isPlaying ? 'Pause' : 'Play'}
+              </button>
+            </div>
+
+            <div className="settings-item">
+              <label className="neon-text">Account:</label>
+              <button className="logout-btn" onClick={handleLogout}>
+                Log out
+              </button>
+            </div>
+
             <button className="close-btn" onClick={closeSettings}>Close</button>
           </div>
         </div>
