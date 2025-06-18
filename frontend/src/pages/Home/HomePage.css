@@ -1,0 +1,114 @@
+.casino-wrapper {
+  height: 100vh;
+  width: 100%;
+  background-image: url('https://images.unsplash.com/photo-1612817159949-e7c2265c40e2?auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.casino-overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+}
+
+.casino-glow-title h1 {
+  font-size: 4rem;
+  color: #00f0ff;
+  text-shadow: 0 0 12px #00f0ff, 0 0 24px #00c9ff;
+  margin-bottom: 0.5rem;
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.tagline {
+  color: #ff0077;
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 0 10px #ff0077;
+}
+
+.button-group {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.enter-button,
+.info-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.enter-button {
+  background: linear-gradient(135deg, #00f0ff, #0088ff);
+  text-shadow: 0 0 5px #00f0ff;
+}
+
+.enter-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #00f0ff;
+}
+
+.info-button {
+  background: linear-gradient(135deg, #ff0077, #ff0055);
+  text-shadow: 0 0 5px #ff0077;
+}
+
+.info-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #ff0077;
+}
+
+.footer {
+  position: absolute;
+  bottom: 60px;
+  color: #666;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px black;
+}
+
+@keyframes pulse {
+  0% { text-shadow: 0 0 12px #00f0ff, 0 0 24px #00c9ff; }
+  50% { text-shadow: 0 0 24px #00f0ff, 0 0 36px #00c9ff; }
+  100% { text-shadow: 0 0 12px #00f0ff, 0 0 24px #00c9ff; }
+}
+
+.music-toggle {
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  background: #111;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+  background-color: #0ff;
+  color: black;
+  box-shadow: 0 0 12px #0ff;
+}
