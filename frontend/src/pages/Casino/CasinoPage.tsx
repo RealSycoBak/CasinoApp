@@ -1,14 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User } from '../../App';
 import ParticlesBg from '../../components/ParticlesBg/ParticlesBg';
 import { useAudio } from '../../contexts/AudioContexts';
 import './CasinoPage.css';
-
-interface Props {
-  user: User;
-  setUser: (u: User | null) => void;
-}
+import { io } from 'socket.io-client';
 
 const GAMES = [
   { id: 1, name: 'Roulette', bgClass: 'roulette-bg' },
@@ -17,7 +13,26 @@ const GAMES = [
   { id: 4, name: 'Poker',    bgClass: 'poker-bg'    },
 ];
 
+interface Props {
+  user: User;
+  setUser: (u: User | null) => void;
+}
+
 export default function CasinoPage({ user, setUser }: Props) {
+  useEffect(() => {
+  const socket = io('http://localhost:3000', { withCredentials: true });
+  socket.on('currencyUpdate', ({ currency }) => {
+    if (user) {
+      setUser({
+        displayName: user.displayName,
+        email:       user.email,
+        currency
+      });
+    }
+  });
+  return () => { socket.disconnect(); };
+}, [user, setUser]);
+
   const navigate = useNavigate();
   const { isPlaying, togglePlay } = useAudio();
   const [showSettings, setShowSettings] = useState(false);
@@ -48,13 +63,20 @@ export default function CasinoPage({ user, setUser }: Props) {
       <div className="games-container">
         <div className="games-grid">
           {GAMES.map(game => (
-            <div key={game.id} className={`game-card ${game.bgClass}`}>
-              <h2 className="game-name neon-text">{game.name}</h2>
-              <button className="play-btn" onClick={() => alert(`Launch ${game.name}`)}>
-                Play
-              </button>
-            </div>
-          ))}
+  <div key={game.id} className={`game-card ${game.bgClass}`}>
+    <h2 className="game-name neon-text">{game.name}</h2>
+    <button
+      className="play-btn"
+      onClick={() =>
+        game.name === 'Blackjack'
+          ? navigate('/blackjack')
+          : alert(`Coming soon: ${game.name}`)
+      }
+    >
+      Play
+    </button>
+  </div>
+))}
         </div>
       </div>
 

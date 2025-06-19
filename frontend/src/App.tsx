@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import HomePage from './pages/Home/HomePage';
 import CasinoPage from './pages/Casino/CasinoPage';
+import BlackjackPage from './pages/Casino/BlackJackPage';
 
 export interface User {
   displayName: string;
@@ -36,6 +37,14 @@ export default function App() {
           : <Navigate to="/" replace />
       }
     />
+    <Route
+  path="/blackjack"
+  element={
+    user && user.displayName
+      ? <BlackjackPage />
+      : <Navigate to="/" replace />
+  }
+/>
   </Routes>
 </HashRouter>
   );

@@ -36,7 +36,7 @@ function ParticlesBg() {
     resize:   { enable: true }
   },
   modes: {
-    push:    { quantity: 4 },
+    push:    { quantity: 6 },
     repulse: { distance: 150, duration: 0.6 }
   }
 },
@@ -82,7 +82,7 @@ function ParticlesBg() {
     },
     number: {
       density: { enable: true, area: 800 },
-      value: 100
+      value: 120
     }
   },
   detectRetina: true

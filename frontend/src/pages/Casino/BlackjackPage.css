@@ -1,0 +1,248 @@
+/* src/pages/BlackjackPage.css */
+
+/* Page & felt background */
+.blackjack-page {
+  position: relative;
+  padding: 1rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('/images/poker-felt.jpg') center/cover no-repeat;
+  overflow-x: hidden;
+}
+.blackjack-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 0;
+}
+
+/* Leave Game button */
+.leave-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  background: transparent;
+  border: 2px solid #FFD700;
+  color: #FFD700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 4px #FFD700;
+  transition: background 0.2s, color 0.2s;
+}
+.leave-btn:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+/* Header / lobby info */
+.lobby-info {
+  position: relative;
+  z-index: 1;
+  color: #FFD700;
+  text-shadow: 0 0 4px #FFD700;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Betting section (if you add bets) */
+.bet-section {
+  z-index: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.bet-section input {
+  width: 4rem;
+  padding: 0.25rem;
+  border: 2px solid #FFD700;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.6);
+  color: #FFD700;
+  text-align: center;
+}
+.bet-section button {
+  border: 2px solid #FFD700;
+  background: transparent;
+  color: #FFD700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.bet-section button:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+/* Table container */
+.table-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Seat rows */
+.seats-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+.seat {
+  position: relative;
+  width: 50px;
+  height: 70px;
+  border: 2px solid #FFD700;
+  border-radius: 4px;
+  background: rgba(255,215,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.seat.loading {
+  background: transparent;
+}
+.seat.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 18px; height: 18px;
+  margin: -9px;
+  border: 2px solid #FFD700;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.seat.occupied {
+  background: rgba(255,215,0,0.3);
+}
+.seat.turn {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px #FFF;
+}
+.seat-name {
+  position: absolute;
+  bottom: -1.4rem;
+  font-size: 0.75rem;
+  color: #FFF;
+  text-shadow: 0 0 2px #000;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Hands layout */
+.hands-container {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 900px;
+  justify-content: space-around;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+/* Panels for dealer & player */
+.hand-section {
+  flex: 1 1 40%;
+  min-width: 260px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 8px #FFD700;
+  color: #FFD700;
+}
+.hand-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  text-shadow: 0 0 4px #FFD700;
+}
+
+/* Cards row */
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.card {
+  width: 80px;
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 0 4px #FFD700;
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.05);
+}
+
+/* Action buttons */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.action-btn {
+  background: transparent;
+  border: 2px solid #FFD700;
+  color: #FFD700;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 4px #FFD700;
+  transition: background 0.2s, color 0.2s;
+}
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.action-btn:hover:not(:disabled) {
+  background: #FFD700;
+  color: #000;
+}
+
+/* Result banner */
+.result {
+  position: relative;
+  z-index: 1;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #000;
+}
+.result-win  { background: rgba(0,255,0,0.3); }
+.result-lose { background: rgba(255,0,0,0.3); }
+.result-push { background: rgba(255,255,0,0.3); }
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .seats-row { display: none; }
+  .hands-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 60px;
+    height: 90px;
+  }
+  .hand-section {
+    width: 100%;
+    min-width: auto;
+  }
+}
